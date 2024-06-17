@@ -37,7 +37,7 @@ function colorModeToggle() {
     if (lightValue.length) {
       if (!darkValue.length) darkValue = lightValue;
       lightColors[`--light--${item}`] = lightValue;
-      darkColors[`--dark--${item}`] = darkValue;
+      darkColors[`--light--${item}`] = darkValue;
     }
   });
 
