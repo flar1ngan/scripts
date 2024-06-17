@@ -113,9 +113,9 @@ function colorModeToggle() {
         // Toggle image visibility
         if (imageElement) {
           if (darkClass) {
-            imageElement.style.display = "block";
+            imageElement.style.display = "none"; // Hide the image when in dark mode
           } else {
-            imageElement.style.display = "none";
+            imageElement.style.display = "block"; // Show the image when in light mode
           }
         }
       });
