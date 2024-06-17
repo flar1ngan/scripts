@@ -80,8 +80,9 @@ function colorModeToggle() {
   }
 
   function checkPreference(e) {
-    goDark(true, false);
+    goDark(false, false);
   }
+
   const colorPreference = window.matchMedia("(prefers-color-scheme: dark)");
   colorPreference.addEventListener("change", (e) => {
     checkPreference(e);
@@ -91,7 +92,7 @@ function colorModeToggle() {
   if (storagePreference !== null) {
     storagePreference === "true" ? goDark(true, false) : goDark(false, false);
   } else {
-    checkPreference(colorPreference);
+    goDark(false, false);
   }
 
   window.addEventListener("DOMContentLoaded", (event) => {
