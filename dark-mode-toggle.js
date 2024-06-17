@@ -75,7 +75,7 @@ function colorModeToggle() {
     }
   }
 
-  goDark(true, false);  // Always start in dark mode
+  goDark(false, false);  // Always start in dark mode
 
   window.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[tr-color-toggle]");
