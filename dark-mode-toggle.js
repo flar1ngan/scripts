@@ -37,7 +37,7 @@ function colorModeToggle() {
     if (lightValue.length) {
       if (!darkValue.length) darkValue = lightValue;
       lightColors[`--color--${item}`] = lightValue;
-      darkColors[`--dark--${item}`] = darkValue;
+      darkColors[`--color--${item}`] = darkValue;
     }
   });
 
@@ -94,30 +94,17 @@ function colorModeToggle() {
     checkPreference(colorPreference);
   }
 
-  document.addEventListener("DOMContentLoaded", (event) => {
+  window.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[tr-color-toggle]");
     toggleEl.forEach(function (element) {
       element.setAttribute("aria-label", "View Dark Mode");
       element.setAttribute("role", "button");
       element.setAttribute("aria-pressed", togglePressed);
     });
-
-    // Select the image element using the custom attribute
-    const imageElement = document.querySelector("[data-toggle-image='true']");
-
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
         let darkClass = htmlElement.classList.contains("dark-mode");
         darkClass ? goDark(false, true) : goDark(true, true);
-
-        // Toggle image visibility
-        if (imageElement) {
-          if (darkClass) {
-            imageElement.style.display = "none"; // Hide the image when in dark mode
-          } else {
-            imageElement.style.display = "block"; // Show the image when in light mode
-          }
-        }
       });
     });
   });
