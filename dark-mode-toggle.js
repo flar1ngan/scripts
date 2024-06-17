@@ -2,7 +2,7 @@ function colorModeToggle() {
   const htmlElement = document.documentElement;
   const computed = getComputedStyle(htmlElement);
   let toggleEl;
-  let togglePressed = "true";  // Default to dark mode pressed
+  let togglePressed = "false";  // Default to 'color' palette not pressed
 
   const scriptTag = document.querySelector("[tr-color-vars]");
   if (!scriptTag) {
@@ -29,15 +29,15 @@ function colorModeToggle() {
     return;
   }
 
-  let darkColors = {};
+  let lightColors = {};
   cssVariables.split(",").forEach(function (item) {
-    let darkValue = computed.getPropertyValue(`--dark--${item}`);
-    if (darkValue.length) {
-      darkColors[`--color--${item}`] = darkValue;
+    let lightValue = computed.getPropertyValue(`--color--${item}`);
+    if (lightValue.length) {
+      lightColors[`--color--${item}`] = lightValue;
     }
   });
 
-  if (!Object.keys(darkColors).length) {
+  if (!Object.keys(lightColors).length) {
     console.warn("No variables found matching tr-color-vars attribute value");
     return;
   }
@@ -56,17 +56,17 @@ function colorModeToggle() {
     }
   }
 
-  function goDark(dark, animate) {
-    if (dark) {
-      localStorage.setItem("dark-mode", "true");
-      htmlElement.classList.add("dark-mode");
-      setColors(darkColors, animate);
-      togglePressed = "true";
-    } else {
+  function goLight(light, animate) {
+    if (light) {
       localStorage.setItem("dark-mode", "false");
       htmlElement.classList.remove("dark-mode");
-      setColors({}, animate);
+      setColors(lightColors, animate);
       togglePressed = "false";
+    } else {
+      localStorage.setItem("dark-mode", "true");
+      htmlElement.classList.add("dark-mode");
+      setColors({}, animate);
+      togglePressed = "true";
     }
     if (typeof toggleEl !== "undefined") {
       toggleEl.forEach(function (element) {
@@ -75,19 +75,19 @@ function colorModeToggle() {
     }
   }
 
-  goDark(false, false);  // Always start in dark mode
+  goLight(true, false);  // Always start with 'color' palette
 
   window.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[tr-color-toggle]");
     toggleEl.forEach(function (element) {
-      element.setAttribute("aria-label", "View Dark Mode");
+      element.setAttribute("aria-label", "View Light Mode");
       element.setAttribute("role", "button");
       element.setAttribute("aria-pressed", togglePressed);
     });
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
         let darkClass = htmlElement.classList.contains("dark-mode");
-        darkClass ? goDark(false, true) : goDark(true, true);
+        darkClass ? goLight(true, true) : goLight(false, true);
       });
     });
   });
