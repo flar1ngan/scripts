@@ -75,7 +75,6 @@ function colorModeToggle() {
     }
 
     function goDark(dark, animate) {
-console.log("inverting");
 
         if (dark) {
             localStorage.setItem("dark-mode", "true");
@@ -123,7 +122,7 @@ console.log("inverting");
         toggleEl.forEach(function (element) {
             element.addEventListener("click", function () {
                 let darkClass = htmlElement.classList.contains("dark-mode");
-                darkClass ? goDark(false, true) : goDark(true, true);
+                darkClass ? goDark(true, true) : goDark(false, true);
             });
         });
     });
