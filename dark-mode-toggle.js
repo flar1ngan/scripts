@@ -80,7 +80,7 @@ function colorModeToggle() {
   }
 
   function checkPreference(e) {
-    goDark(e.matches, false);
+    goDark(!e.matches, false);
   }
   const colorPreference = window.matchMedia("(prefers-color-scheme: dark)");
   colorPreference.addEventListener("change", (e) => {
