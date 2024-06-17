@@ -102,8 +102,8 @@ function colorModeToggle() {
       element.setAttribute("aria-pressed", togglePressed);
     });
 
-    // Select the image element
-    const imageElement = document.querySelector(".toggle-image");
+    // Select the image element using the custom attribute
+    const imageElement = document.querySelector("[data-toggle-image='true']");
 
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
