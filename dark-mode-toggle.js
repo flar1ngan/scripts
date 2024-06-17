@@ -1,4 +1,15 @@
 function colorModeToggle() {
+  const htmlElement = document.documentElement;
+  const computed = getComputedStyle(htmlElement);
+  let toggleEl;
+  let togglePressed = "true";  // Default to dark mode pressed
+
+  const scriptTag = document.querySelector("[tr-color-vars]");
+  if (!scriptTag) {
+    console.warn("Script tag with tr-color-vars attribute not found");
+    return;
+  }
+
   function attr(defaultVal, attrVal) {
     const defaultValType = typeof defaultVal;
     if (typeof attrVal !== "string" || attrVal.trim() === "") return defaultVal;
@@ -7,17 +18,6 @@ function colorModeToggle() {
     if (isNaN(attrVal) && defaultValType === "string") return attrVal;
     if (!isNaN(attrVal) && defaultValType === "number") return +attrVal;
     return defaultVal;
-  }
-
-  const htmlElement = document.documentElement;
-  const computed = getComputedStyle(htmlElement);
-  let toggleEl;
-  let togglePressed = "false";
-
-  const scriptTag = document.querySelector("[tr-color-vars]");
-  if (!scriptTag) {
-    console.warn("Script tag with tr-color-vars attribute not found");
-    return;
   }
 
   let colorModeDuration = attr(0.5, scriptTag.getAttribute("duration"));
@@ -29,19 +29,15 @@ function colorModeToggle() {
     return;
   }
 
-  let lightColors = {};
   let darkColors = {};
   cssVariables.split(",").forEach(function (item) {
-    let lightValue = computed.getPropertyValue(`--color--${item}`);
     let darkValue = computed.getPropertyValue(`--dark--${item}`);
-    if (lightValue.length) {
-      if (!darkValue.length) darkValue = lightValue;
-      lightColors[`--color--${item}`] = lightValue;
+    if (darkValue.length) {
       darkColors[`--color--${item}`] = darkValue;
     }
   });
 
-  if (!Object.keys(lightColors).length) {
+  if (!Object.keys(darkColors).length) {
     console.warn("No variables found matching tr-color-vars attribute value");
     return;
   }
@@ -69,7 +65,7 @@ function colorModeToggle() {
     } else {
       localStorage.setItem("dark-mode", "false");
       htmlElement.classList.remove("dark-mode");
-      setColors(lightColors, animate);
+      setColors({}, animate);
       togglePressed = "false";
     }
     if (typeof toggleEl !== "undefined") {
@@ -79,21 +75,7 @@ function colorModeToggle() {
     }
   }
 
-  function checkPreference(e) {
-    goDark(false, false);
-  }
-
-  const colorPreference = window.matchMedia("(prefers-color-scheme: dark)");
-  colorPreference.addEventListener("change", (e) => {
-    checkPreference(e);
-  });
-
-  let storagePreference = localStorage.getItem("dark-mode");
-  if (storagePreference !== null) {
-    storagePreference === "true" ? goDark(true, false) : goDark(false, false);
-  } else {
-    goDark(false, false);
-  }
+  goDark(true, false);  // Always start in dark mode
 
   window.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[tr-color-toggle]");
@@ -110,4 +92,5 @@ function colorModeToggle() {
     });
   });
 }
+
 colorModeToggle();
