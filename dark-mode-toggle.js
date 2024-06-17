@@ -78,13 +78,13 @@ function colorModeToggle() {
             localStorage.setItem("dark-mode", "true");
             htmlElement.classList.add("dark-mode");
             setColors(darkColors, animate);
-            setInvertFilter(true);
+            setInvertFilter(false);
             togglePressed = "true";
         } else {
             localStorage.setItem("dark-mode", "false");
             htmlElement.classList.remove("dark-mode");
             setColors(lightColors, animate);
-            setInvertFilter(false);
+            setInvertFilter(true);
             togglePressed = "false";
         }
         if (typeof toggleEl !== "undefined") {
@@ -120,7 +120,7 @@ function colorModeToggle() {
         toggleEl.forEach(function (element) {
             element.addEventListener("click", function () {
                 let darkClass = htmlElement.classList.contains("dark-mode");
-                darkClass ? goDark(true, true) : goDark(false, true);
+                darkClass ? goDark(false, true) : goDark(true, true);
             });
         });
     });
