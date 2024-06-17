@@ -64,9 +64,11 @@ function colorModeToggle() {
         const invertImages = document.querySelectorAll('.invert-color');
         invertImages.forEach(function (img) {
             if (dark) {
-                img.style.filter = "invert(0)";
-            } else {
+                console.log("inverting")
                 img.style.filter = "invert(1)";
+            } else {
+                console.log("inverting")
+                img.style.filter = "invert(0)";
             }
         });
     }
