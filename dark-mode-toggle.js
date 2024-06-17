@@ -64,7 +64,8 @@ function colorModeToggle() {
         const invertImages = document.querySelectorAll('.invert-color');
         invertImages.forEach(function (img) {
             if (dark) {
-                console.log("inverting")
+
+                console.log("inverting");
                 img.style.filter = "invert(1)";
             } else {
                 console.log("inverting")
@@ -74,6 +75,8 @@ function colorModeToggle() {
     }
 
     function goDark(dark, animate) {
+console.log("inverting");
+
         if (dark) {
             localStorage.setItem("dark-mode", "true");
             htmlElement.classList.add("dark-mode");
