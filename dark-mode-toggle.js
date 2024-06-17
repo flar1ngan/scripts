@@ -37,7 +37,7 @@ function colorModeToggle() {
     if (lightValue.length) {
       if (!darkValue.length) darkValue = lightValue;
       lightColors[`--color--${item}`] = lightValue;
-      darkColors[`--color--${item}`] = darkValue;
+      darkColors[`--dark--${item}`] = darkValue;
     }
   });
 
@@ -101,10 +101,23 @@ function colorModeToggle() {
       element.setAttribute("role", "button");
       element.setAttribute("aria-pressed", togglePressed);
     });
+
+    // Select the image element
+    const imageElement = document.getElementById("toggle-image");
+
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
         let darkClass = htmlElement.classList.contains("dark-mode");
         darkClass ? goDark(false, true) : goDark(true, true);
+
+        // Toggle image visibility
+        if (imageElement) {
+          if (darkClass) {
+            imageElement.style.display = "block";
+          } else {
+            imageElement.style.display = "none";
+          }
+        }
       });
     });
   });
