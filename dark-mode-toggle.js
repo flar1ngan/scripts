@@ -94,7 +94,7 @@ function colorModeToggle() {
     checkPreference(colorPreference);
   }
 
-  window.addEventListener("DOMContentLoaded", (event) => {
+  document.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[tr-color-toggle]");
     toggleEl.forEach(function (element) {
       element.setAttribute("aria-label", "View Dark Mode");
@@ -103,7 +103,7 @@ function colorModeToggle() {
     });
 
     // Select the image element
-    const imageElement = document.getElementById("toggle-image");
+    const imageElement = document.querySelector(".toggle-image");
 
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
