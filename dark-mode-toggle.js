@@ -89,8 +89,13 @@ function colorModeToggle() {
       element.setAttribute("aria-pressed", togglePressed);
     });
 
-    // Always load light mode first
-    goDark(false, false);
+    // Check the local storage and set the initial theme
+    let storagePreference = localStorage.getItem("dark-mode");
+    if (storagePreference === "true") {
+      goDark(true, false);
+    } else {
+      goDark(false, false);
+    }
 
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
