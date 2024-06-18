@@ -37,7 +37,7 @@ function colorModeToggle() {
     if (lightValue.length) {
       if (!darkValue.length) darkValue = lightValue;
       lightColors[`--color--${item}`] = lightValue;
-      darkColors[`--dark--${item}`] = darkValue;
+      darkColors[`--color--${item}`] = darkValue;
     }
   });
 
@@ -60,25 +60,16 @@ function colorModeToggle() {
     }
   }
 
-  function toggleImages(invert) {
-    const imagesToToggle = document.querySelectorAll('[data-toggle-image]');
-    imagesToToggle.forEach(function (image) {
-      image.style.filter = invert ? 'invert(100%)' : 'invert(0%)';
-    });
-  }
-
   function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", "true");
       htmlElement.classList.add("dark-mode");
       setColors(darkColors, animate);
-      toggleImages(true); // Invert images
       togglePressed = "true";
     } else {
       localStorage.setItem("dark-mode", "false");
       htmlElement.classList.remove("dark-mode");
       setColors(lightColors, animate);
-      toggleImages(false); // Reset image inversion
       togglePressed = "false";
     }
     if (typeof toggleEl !== "undefined") {
@@ -116,23 +107,6 @@ function colorModeToggle() {
         darkClass ? goDark(false, true) : goDark(true, true);
       });
     });
-
-    // Ensure images are toggled correctly on initial load
-    const isDark = localStorage.getItem("dark-mode") === "true";
-    toggleImages(isDark);
   });
-
-  // Observe for new elements (for pagination or dynamically added content)
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.addedNodes.length > 0) {
-        const isDark = localStorage.getItem("dark-mode") === "true";
-        toggleImages(isDark);
-      }
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
 }
-
 colorModeToggle();
