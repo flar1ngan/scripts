@@ -81,21 +81,6 @@ function colorModeToggle() {
     }
   }
 
-  function checkPreference(e) {
-    goDark(e.matches, false);
-  }
-  const colorPreference = window.matchMedia("(prefers-color-scheme: dark)");
-  colorPreference.addEventListener("change", (e) => {
-    checkPreference(e);
-  });
-
-  let storagePreference = localStorage.getItem("dark-mode");
-  if (storagePreference !== null) {
-    storagePreference === "true" ? goDark(true, false) : goDark(false, false);
-  } else {
-    checkPreference(colorPreference);
-  }
-
   window.addEventListener("DOMContentLoaded", (event) => {
     toggleEl = document.querySelectorAll("[tr-color-toggle]");
     toggleEl.forEach(function (element) {
@@ -103,6 +88,10 @@ function colorModeToggle() {
       element.setAttribute("role", "button");
       element.setAttribute("aria-pressed", togglePressed);
     });
+
+    // Always load light mode first
+    goDark(false, false);
+
     toggleEl.forEach(function (element) {
       element.addEventListener("click", function () {
         let darkClass = htmlElement.classList.contains("dark-mode");
