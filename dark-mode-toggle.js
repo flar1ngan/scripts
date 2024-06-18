@@ -37,7 +37,7 @@ function colorModeToggle() {
     if (lightValue.length) {
       if (!darkValue.length) darkValue = lightValue;
       lightColors[`--color--${item}`] = lightValue;
-      darkColors[`--dark--${item}`] = darkValue;
+      darkColors[`--color--${item}`] = darkValue;
     }
   });
 
@@ -60,28 +60,19 @@ function colorModeToggle() {
     }
   }
 
-  function toggleImages(isDarkMode) {
-    var imagesToToggle = document.querySelectorAll('[data-toggle-image]');
-    imagesToToggle.forEach(function(image) {
-      image.style.filter = isDarkMode ? 'invert(100%)' : 'invert(0%)';
-    });
-  }
-
   function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", "true");
-      localStorage.setItem('isInverted', 'true');
+      localStorage.setItem("isInverted", "true"); // Update isInverted
       htmlElement.classList.add("dark-mode");
       setColors(darkColors, animate);
       togglePressed = "true";
-      toggleImages(true);
     } else {
       localStorage.setItem("dark-mode", "false");
-      localStorage.setItem('isInverted', 'false');
+      localStorage.setItem("isInverted", "false"); // Update isInverted
       htmlElement.classList.remove("dark-mode");
       setColors(lightColors, animate);
       togglePressed = "false";
-      toggleImages(false);
     }
     if (typeof toggleEl !== "undefined") {
       toggleEl.forEach(function (element) {
@@ -121,26 +112,3 @@ function colorModeToggle() {
   });
 }
 colorModeToggle();
-
-document.addEventListener("DOMContentLoaded", function() {
-  function toggleImages(isDarkMode) {
-    var imagesToToggle = document.querySelectorAll('[data-toggle-image]');
-    imagesToToggle.forEach(function(image) {
-      image.style.filter = isDarkMode ? 'invert(100%)' : 'invert(0%)';
-    });
-  }
-
-  var storagePreference = localStorage.getItem("dark-mode");
-  var isDarkMode = storagePreference === 'true';
-  toggleImages(isDarkMode);
-
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.addedNodes.length > 0) {
-        toggleImages(isDarkMode);
-      }
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-});
