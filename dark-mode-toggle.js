@@ -63,13 +63,11 @@ function colorModeToggle() {
   function goDark(dark, animate) {
     if (dark) {
       localStorage.setItem("dark-mode", "true");
-      localStorage.setItem("isInverted", "true"); // Update isInverted
       htmlElement.classList.add("dark-mode");
       setColors(darkColors, animate);
       togglePressed = "true";
     } else {
       localStorage.setItem("dark-mode", "false");
-      localStorage.setItem("isInverted", "false"); // Update isInverted
       htmlElement.classList.remove("dark-mode");
       setColors(lightColors, animate);
       togglePressed = "false";
